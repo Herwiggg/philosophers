@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:50:27 by almichel          #+#    #+#             */
-/*   Updated: 2024/04/16 18:17:06 by almichel         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:39:44 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int main(int ac, char **av)
 {
-	t_philo philo;
-	
+	t_table table;
+	t_philo	philo;
+
 	if (ac != 5 && ac != 6)
 	{
 		write(1, "Wrong number of args\n", 22);
@@ -26,5 +27,5 @@ int main(int ac, char **av)
 		write (1, "invalid args\n", 14);
 		return (-1);
 	}
-	ft_init_struct(&philo, av);
+	ft_init_struct(&table, av, &philo);
 }
