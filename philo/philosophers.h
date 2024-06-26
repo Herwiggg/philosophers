@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/04/17 18:49:08 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/26 04:19:30 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +15,7 @@
 # define PHILOSOPHERS_H
 
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -47,15 +49,17 @@ typedef struct s_fork
 
 typedef struct s_table
 {
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
-	int					start_time;
-	int					num_of_philos;
-	int					num_times_to_eat;
-	int					end_simulation;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
+	long				start_time;
+	long				num_of_philos;
+	long				num_times_to_eat;
+	bool				end_simulation;
+	bool				thread_ready;
 	t_fork				*forks;
 	t_philo				*philos;
+	pthread_mutex_t		table_mutex;
 }						t_table;
 
 typedef struct s_philo
@@ -76,8 +80,21 @@ int						ft_check_arg_and_pars(char **str);
 int						ft_check_nbrs(char *str);
 void					ft_init_struct(t_table *table, char **argv,
 							t_philo *philo);
-void					init_fork(t_philo *philo, t_fork *forks, int i);
+void					assign_fork(t_philo *philo, t_fork *forks, int i);
 void					init_philo(t_philo *philo, t_table *table);
+
+/*---------Dinner----------*/
+void					dinner_start(t_table *table);
+void					*dinner_simulation(void *data);
+void					wait_threads(t_table *table);
+
+/*---------setters & getters-----------*/
+void					set_bool(pthread_mutex_t *mutex, bool *dest,
+							bool value);
+bool					get_bool(pthread_mutex_t *mutex, bool *value);
+void					set_long(pthread_mutex_t *mutex, long *dest,
+							long value);
+long					get_long(pthread_mutex_t *mutex, long *value);
 
 /*---------Utils-----------*/
 long long				ft_atoi(const char *nptr);

@@ -5,6 +5,8 @@ RM = rm -f
 MSRC = philosophers.c\
 		parsing.c\
 		utils1.c\
+		dinner.c\
+		setters_getters.c\
 
 MOBJ = $(MSRC:.c=.o)
 

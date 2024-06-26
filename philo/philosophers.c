@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:50:27 by almichel          #+#    #+#             */
-/*   Updated: 2024/04/17 18:39:44 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/26 04:48:45 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char **av)
 	if (ac != 5 && ac != 6)
 	{
 		write(1, "Wrong number of args\n", 22);
-		return (1);
+		return (-1);
 	}
 	if (ft_check_arg_and_pars(av) == -1)
 	{

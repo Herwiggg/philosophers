@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/04/17 18:48:20 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/26 04:21:37 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
 	table->forks = malloc((ft_atoi(argv[1]) * sizeof(t_fork)));
 	if (!table->forks)
 		return;
-	table->end_simulation = -1;
+	table->end_simulation = false;
+	table->thread_ready = false;
+	pthread_mutex_init(&table->table_mutex, NULL);
 	while (++i < table->num_of_philos)
 	{
 		pthread_mutex_init(&table->forks[i].fork, NULL);
@@ -88,17 +90,16 @@ void	init_philo(t_philo *philo, t_table *table)
 	while (i < table->num_of_philos)
 	{
 		philo = table->philos + i;
-		philo = table->philos + i;
 		philo->id = i + 1;
 		philo->meals_counter = 0;
 		philo->full = 1; 
 		philo->table = table;
-		init_fork(philo, table->forks, i);
+		assign_fork(philo, table->forks, i);
 		i++;
 	}
 }
 
-void	init_fork(t_philo *philo, t_fork *forks, int i)
+void	assign_fork(t_philo *philo, t_fork *forks, int i)
 {
 	if (philo->id % 2 == 0)
 	{
