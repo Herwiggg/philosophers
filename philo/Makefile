@@ -7,6 +7,7 @@ MSRC = philosophers.c\
 		utils1.c\
 		dinner.c\
 		setters_getters.c\
+		write.c\
 
 MOBJ = $(MSRC:.c=.o)
 

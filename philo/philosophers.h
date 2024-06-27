@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdio.h>
 
 /* - time_to_die: Time after which a philosopher will die if they haven't eaten.
 ** - time_to_eat: Time it takes for a philosopher to eat a meal.
@@ -30,16 +31,23 @@
 ** - all_threads_ready: synchro the start of simulation*/
 
 typedef struct s_philo	t_philo;
-typedef enum e_opcode
+
+typedef enum e_status
 {
-	LOCK,
-	UNLOCK,
-	INIT,
-	DESTROY,
-	CREATE,
-	JOIN,
-	DETACH,
-}						t_opcode;
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}						t_status;
+
+typedef enum e_time_code
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}						t_time_code;
 
 typedef struct s_fork
 {
@@ -60,6 +68,7 @@ typedef struct s_table
 	t_fork				*forks;
 	t_philo				*philos;
 	pthread_mutex_t		table_mutex;
+	pthread_mutex_t		write_mutex;
 }						t_table;
 
 typedef struct s_philo
@@ -87,6 +96,8 @@ void					init_philo(t_philo *philo, t_table *table);
 void					dinner_start(t_table *table);
 void					*dinner_simulation(void *data);
 void					wait_threads(t_table *table);
+void					write_status(t_status status, t_philo *philo);
+bool					simulation_finished(t_table *table);
 
 /*---------setters & getters-----------*/
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
@@ -98,5 +109,7 @@ long					get_long(pthread_mutex_t *mutex, long *value);
 
 /*---------Utils-----------*/
 long long				ft_atoi(const char *nptr);
+long					gettime(t_time_code time_code);
+void					precise_usleep(long usec, t_table *table);
 
 #endif
