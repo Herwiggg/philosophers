@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/27 01:41:49 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:51:02 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
 {
 	int	i;
 
-	i = 1;
+	i = -1;
 	table->num_of_philos = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
@@ -65,7 +65,7 @@ void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
 		table->num_times_to_eat = ft_atoi(argv[5]);
 	else
 		table->num_times_to_eat = -1;
-	table->philos = malloc((ft_atoi(argv[1]) * sizeof(t_fork)));
+	table->philos = malloc((ft_atoi(argv[1]) * sizeof(t_philo)));
 	if (!table->philos)
 		return;
 	table->forks = malloc((ft_atoi(argv[1]) * sizeof(t_fork)));
@@ -87,16 +87,16 @@ void	init_philo(t_philo *philo, t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (i < table->num_of_philos)
+	i = -1;
+	while (++i < table->num_of_philos)
 	{
 		philo = table->philos + i;
 		philo->id = i + 1;
 		philo->meals_counter = 0;
-		philo->full = 1; 
+		philo->full = false; 
 		philo->table = table;
+		pthread_mutex_init(&philo->philo_mutex, NULL);
 		assign_fork(philo, table->forks, i);
-		i++;
 	}
 }
 

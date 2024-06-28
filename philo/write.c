@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:39:23 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/27 02:22:47 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:55:05 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	write_status(t_status status, t_philo *philo)
 	pthread_mutex_lock(&philo->table->write_mutex);
 
 	if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK) && !simulation_finished(philo->table))
-		printf("%-6ld %d has taken a fork", elapsed, philo->id);
+		printf("%-6ld %d has taken a fork\n", elapsed, philo->id);
 	else if ((status == EATING) && !simulation_finished(philo->table))
-		printf("%-6ld %d is eating", elapsed, philo->id);
+		printf("%-6ld %d is eating\n", elapsed, philo->id);
 	else if ((status == SLEEPING) && !simulation_finished(philo->table))
-		printf("%-6ld %d is sleeping", elapsed, philo->id);
+		printf("%-6ld %d is sleeping\n", elapsed, philo->id);
 	else if ((status == THINKING) && !simulation_finished(philo->table))
-		printf("%-6ld %d is thinking", elapsed, philo->id);
+		printf("%-6ld %d is thinking\n", elapsed, philo->id);
 	else if ((status == DIED) && !simulation_finished(philo->table))
-		printf("%-6ld %d died", elapsed, philo->id);
+		printf("%-6ld %d died\n", elapsed, philo->id);
 	pthread_mutex_unlock(&philo->table->write_mutex);
 }

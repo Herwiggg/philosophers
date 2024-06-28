@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/27 01:31:23 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:48:38 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ long long	ft_atoi(const char *nptr)
 long	gettime(t_time_code time_code)
 {
 	struct timeval tv;
-	if (gettimeofday(&tv, NULL));
+	if (gettimeofday(&tv, NULL))
 		return (0);
 	if (time_code == SECOND)
 		return (tv.tv_sec + (tv.tv_usec / 1e6));

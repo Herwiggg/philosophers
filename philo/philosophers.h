@@ -75,11 +75,12 @@ typedef struct s_philo
 {
 	int					id;
 	long				meals_counter;
-	int					full;
+	bool					full;
 	long				last_meal_time;
 	t_fork				*first_fork;
 	t_fork				*second_fork;
 	pthread_t			thread_id;
+	pthread_mutex_t		philo_mutex;
 	t_table				*table;
 
 }						t_philo;
@@ -98,6 +99,9 @@ void					*dinner_simulation(void *data);
 void					wait_threads(t_table *table);
 void					write_status(t_status status, t_philo *philo);
 bool					simulation_finished(t_table *table);
+void 					eat(t_philo *philo);
+void					sleeping(t_philo *philo);
+void 					think(t_philo *philo);
 
 /*---------setters & getters-----------*/
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
