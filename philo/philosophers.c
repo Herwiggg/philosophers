@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:50:27 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/28 18:28:51 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:16:01 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ int main(int ac, char **av)
 	}
 	ft_init_struct(&table, av, &philo);
 	dinner_start(&table);
-	//dinner_simulation(&philo);
 }
