@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/29 18:28:52 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/30 03:48:13 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
 		return;
 	table->end_simulation = false;
 	table->thread_ready = false;
+	table->thread_running = 0;
 	pthread_mutex_init(&table->table_mutex, NULL);
 	pthread_mutex_init(&table->write_mutex, NULL);
 	while (++i < table->num_of_philos)

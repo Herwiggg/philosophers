@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/29 19:39:29 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/30 05:24:11 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,30 @@ void	precise_usleep(long usec, t_table *table)
 		elapsed = gettime(MILLISECOND) - start;
 		remaining = usec - elapsed;
 		if (remaining > 1e3)
-			usleep(usec / 2);
+			usleep(remaining / 2);
 		else
 		{
 			while (gettime(MILLISECOND) - start < usec)
 				;
 		}
 	}
+}
+
+void	increase_long(pthread_mutex_t *mutex, long *value)
+{
+	pthread_mutex_lock(mutex);
+	(*value)++;
+	pthread_mutex_unlock(mutex);
+}
+
+bool all_thread_running(pthread_mutex_t *mutex, long *threads, long philo_nbr)
+{
+	bool retur;
+
+	retur = false;
+	pthread_mutex_lock(mutex);
+	if (philo_nbr == *threads)
+		retur = true;
+	pthread_mutex_unlock(mutex);
+	return (retur);
 }

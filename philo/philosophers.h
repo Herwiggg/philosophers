@@ -21,15 +21,6 @@
 # include <unistd.h>
 # include <stdio.h>
 
-/* - time_to_die: Time after which a philosopher will die if they haven't eaten.
-** - time_to_eat: Time it takes for a philosopher to eat a meal.
-** - time_to_sleep: Time it takes for a philosopher to sleep.
-** - nbr_limit_meals: The number of meals limit, if < 0 no limits.
-** - philo_nbr: Total number of philosophers at the table.
-** - start_simulation: The starting time of the simulation.
-** - end_simulation: when a philo die, this flag ON
-** - all_threads_ready: synchro the start of simulation*/
-
 typedef struct s_philo	t_philo;
 
 typedef enum e_status
@@ -65,10 +56,12 @@ typedef struct s_table
 	long				num_times_to_eat;
 	bool				end_simulation;
 	bool				thread_ready;
+	long				thread_running;
 	t_fork				*forks;
 	t_philo				*philos;
 	pthread_mutex_t		table_mutex;
 	pthread_mutex_t		write_mutex;
+	pthread_t			monitor;
 }						t_table;
 
 typedef struct s_philo
@@ -103,6 +96,10 @@ void 					eat(t_philo *philo);
 void					sleeping(t_philo *philo);
 void 					think(t_philo *philo);
 
+/*---------Dinner----------*/
+void	*monitor_dinner(void *data);
+bool	philo_died(t_philo *philo);
+
 /*---------setters & getters-----------*/
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
 							bool value);
@@ -115,5 +112,7 @@ long					get_long(pthread_mutex_t *mutex, long *value);
 long long				ft_atoi(const char *nptr);
 long					gettime(t_time_code time_code);
 void					precise_usleep(long usec, t_table *table);
+void					increase_long(pthread_mutex_t *mutex, long *value);
+bool 					all_thread_running(pthread_mutex_t *mutex, long *thread, long philo_nbr);
 
 #endif

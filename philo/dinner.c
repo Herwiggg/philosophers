@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/30 03:01:45 by almichel         ###   ########.fr       */
+/*   Updated: 2024/06/30 05:24:47 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	dinner_start(t_table *table)
 		table->start_time = gettime(MILLISECOND);
 		while (++i < table->num_of_philos)
 			pthread_create(&table->philos[i].thread_id, NULL, dinner_simulation, &table->philos[i]);
+		pthread_create(&table->monitor, NULL, monitor_dinner, table);
 	}
 	set_bool(&table->table_mutex, &table->thread_ready, true);
 	i = -1;
@@ -63,9 +64,11 @@ void	*dinner_simulation(void *data)
 	t_philo *philo;
 
 	philo = (t_philo *)data;
-//	wait_threads(philo->table);
-	if (philo->id % 2 != 0)
-		precise_usleep(philo->table->time_to_eat, philo->table);
+	//wait_threads(philo->table);
+	//if (philo->id % 2 != 0)
+	//	precise_usleep(philo->table->time_to_eat, philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+	increase_long(&philo->table->table_mutex, &philo->table->thread_running);
 	while (!simulation_finished(philo->table))
 	{
 		if (philo->full)
