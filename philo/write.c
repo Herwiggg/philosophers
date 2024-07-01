@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:39:23 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/29 18:00:57 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/01 03:40:44 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	write_status(t_status status, t_philo *philo)
 	if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK) && !simulation_finished(philo->table))
 		printf("%-6ld %d has taken a fork\n", elapsed, philo->id);
 	else if ((status == EATING) && !simulation_finished(philo->table))
-		printf("%-6ld %d is eating\n", elapsed, philo->id);
+		printf(BLUE "%-6ld %d is eating\n" RST, elapsed, philo->id);
 	else if ((status == SLEEPING) && !simulation_finished(philo->table))
 		printf("%-6ld %d is sleeping\n", elapsed, philo->id);
 	else if ((status == THINKING) && !simulation_finished(philo->table))
