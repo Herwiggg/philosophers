@@ -1,6 +1,6 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 MSRC = philosophers.c\
 		parsing.c\
@@ -9,6 +9,7 @@ MSRC = philosophers.c\
 		setters_getters.c\
 		write.c\
 		monitor.c\
+		free.c\
 
 MOBJ = $(MSRC:.c=.o)
 

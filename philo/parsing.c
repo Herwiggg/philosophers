@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/30 03:48:13 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 04:08:42 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_check_nbrs(char *str)
 	return (0);
 }
 
-void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
+int		ft_init_struct(t_table *table, char **argv, t_philo *philo)
 {
 	int	i;
 
@@ -67,24 +67,30 @@ void	ft_init_struct(t_table *table, char **argv, t_philo *philo)
 		table->num_times_to_eat = -1;
 	table->philos = malloc((ft_atoi(argv[1]) * sizeof(t_philo)));
 	if (!table->philos)
-		return;
+		return (-1);
 	table->forks = malloc((ft_atoi(argv[1]) * sizeof(t_fork)));
 	if (!table->forks)
-		return;
+	{
+		free(table->philos);
+		return (-1);
+	}
 	table->end_simulation = false;
 	table->thread_ready = false;
 	table->thread_running = 0;
-	pthread_mutex_init(&table->table_mutex, NULL);
-	pthread_mutex_init(&table->write_mutex, NULL);
+	if (pthread_mutex_init(&table->table_mutex, NULL) != 0)
+		return (destroy_error_mutex(table, 0, 0, 0));
+	if (pthread_mutex_init(&table->write_mutex, NULL) != 0)
+		return (destroy_error_mutex(table, 1, 0, 0));
 	while (++i < table->num_of_philos)
 	{
-		pthread_mutex_init(&table->forks[i].fork, NULL);
+		if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)
+			return (destroy_error_mutex(table, 2, i, 0));
 		table->forks[i].fork_id = i;
 	}
-	init_philo(philo, table);
+	return (init_philo(philo, table));
 }
 
-void	init_philo(t_philo *philo, t_table *table)
+int		init_philo(t_philo *philo, t_table *table)
 {
 	int	i;
 
@@ -96,9 +102,11 @@ void	init_philo(t_philo *philo, t_table *table)
 		philo->meals_counter = 0;
 		philo->full = false; 
 		philo->table = table;
-		pthread_mutex_init(&philo->philo_mutex, NULL);
+		if (pthread_mutex_init(&philo->philo_mutex, NULL) != 0)
+			return (destroy_error_mutex(table, 3, table->num_of_philos, i));
 		assign_fork(philo, table->forks, i);
 	}
+	return (0);
 }
 
 void	assign_fork(t_philo *philo, t_fork *forks, int i)

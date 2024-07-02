@@ -21,6 +21,9 @@
 # include <unistd.h>
 # include <stdio.h>
 
+#define BLUE    "\033[1;34m"
+#define RST 	"\033[0m"
+
 typedef struct s_philo	t_philo;
 
 typedef enum e_status
@@ -81,10 +84,10 @@ typedef struct s_philo
 /*---------Parsing & Init-----------*/
 int						ft_check_arg_and_pars(char **str);
 int						ft_check_nbrs(char *str);
-void					ft_init_struct(t_table *table, char **argv,
+int						ft_init_struct(t_table *table, char **argv,
 							t_philo *philo);
 void					assign_fork(t_philo *philo, t_fork *forks, int i);
-void					init_philo(t_philo *philo, t_table *table);
+int						init_philo(t_philo *philo, t_table *table);
 
 /*---------Dinner----------*/
 void					dinner_start(t_table *table);
@@ -96,9 +99,9 @@ void 					eat(t_philo *philo);
 void					sleeping(t_philo *philo);
 void 					think(t_philo *philo);
 
-/*---------Dinner----------*/
-void	*monitor_dinner(void *data);
-bool	philo_died(t_philo *philo);
+/*---------Monitor----------*/
+void					*monitor_dinner(void *data);
+bool					philo_died(t_philo *philo);
 
 /*---------setters & getters-----------*/
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
@@ -114,5 +117,10 @@ long					gettime(t_time_code time_code);
 void					precise_usleep(long usec, t_table *table);
 void					increase_long(pthread_mutex_t *mutex, long *value);
 bool 					all_thread_running(pthread_mutex_t *mutex, long *thread, long philo_nbr);
+
+/*---------Errors & free-----------*/
+void					destroy_all(t_table *table);
+int						destroy_error_mutex(t_table *table, int type, int type2, int type3);
+void					destroy_error_mutex_2(t_table *table, int type3);
 
 #endif

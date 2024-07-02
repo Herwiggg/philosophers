@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/01 17:25:47 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:59:26 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,3 @@ bool all_thread_running(pthread_mutex_t *mutex, long *threads, long philo_nbr)
 	return (retur);
 }
 
-void	destroy_all(t_table *table)
-{
-	int	i;
-	i = -1;
-	//pthread_mutex_destroy(&philo->philo_mutex);
-	while (++i < table->num_of_philos)
-	{
-		pthread_mutex_destroy(&table->forks[i].fork);
-		pthread_mutex_destroy(&table->philos[i].philo_mutex);
-	}
-	pthread_mutex_destroy(&table->table_mutex);
-	pthread_mutex_destroy(&table->write_mutex);
-}

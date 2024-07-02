@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/01 17:46:14 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 04:03:24 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	dinner_start(t_table *table)
 	i = -1;
 	while (++i < table->num_of_philos)
 		pthread_join(table->philos[i].thread_id, NULL);
-	pthread_join(table->monitor, NULL);
+//	pthread_join(table->monitor, NULL);
+
+	
 }
 
 void	*dinner_simulation(void *data)
