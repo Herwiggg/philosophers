@@ -10,6 +10,7 @@ MSRC = philosophers.c\
 		write.c\
 		monitor.c\
 		free.c\
+		check_inputs.c\
 
 MOBJ = $(MSRC:.c=.o)
 

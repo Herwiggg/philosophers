@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:21:50 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/26 04:31:05 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:53:43 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	set_bool(pthread_mutex_t *mutex, bool *dest, bool value)
 bool	get_bool(pthread_mutex_t *mutex, bool *value)
 {
 	bool	ret;
+
 	pthread_mutex_lock(mutex);
 	ret = *value;
 	pthread_mutex_unlock(mutex);
@@ -38,6 +39,7 @@ void	set_long(pthread_mutex_t *mutex, long *dest, long value)
 long	get_long(pthread_mutex_t *mutex, long *value)
 {
 	long	ret;
+
 	pthread_mutex_lock(mutex);
 	ret = *value;
 	pthread_mutex_unlock(mutex);
@@ -46,5 +48,5 @@ long	get_long(pthread_mutex_t *mutex, long *value)
 
 bool	simulation_finished(t_table *table)
 {
-	return(get_bool(&table->table_mutex, &table->end_simulation));
+	return (get_bool(&table->table_mutex, &table->end_simulation));
 }

@@ -6,15 +6,15 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:50:27 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 18:06:38 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:52:58 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_table table;
+	t_table	table;
 	t_philo	philo;
 
 	if (ac != 5 && ac != 6)

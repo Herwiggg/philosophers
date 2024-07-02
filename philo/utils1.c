@@ -6,42 +6,16 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/01 17:59:26 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:54:02 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long long	ft_atoi(const char *nptr)
-{
-	int			i;
-	int			sign;
-	long long	result;
-
-	result = 0;
-	sign = 1;
-	i = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || (nptr[i] == 32))
-		i++;
-	if (nptr[i] == '-')
-	{
-		sign = -sign;
-		i++;
-	}
-	else if (nptr[i] == '+')
-		i++;
-	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		result = result * 10;
-		result = result + nptr[i] - 48;
-		i++;
-	}
-	return (sign * result);
-}
-
 long	gettime(t_time_code time_code)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	if (gettimeofday(&tv, NULL))
 		return (0);
 	if (time_code == SECOND)
@@ -55,15 +29,15 @@ long	gettime(t_time_code time_code)
 
 void	precise_usleep(long usec, t_table *table)
 {
-	long start;
-	long elapsed;
-	long remaining;
-	
+	long	start;
+	long	elapsed;
+	long	remaining;
+
 	start = gettime(MILLISECOND);
 	while (gettime(MILLISECOND) - start < usec)
 	{
 		if (simulation_finished(table))
-			break;
+			break ;
 		elapsed = gettime(MILLISECOND) - start;
 		remaining = usec - elapsed;
 		if (remaining > 1e3)
@@ -83,15 +57,8 @@ void	increase_long(pthread_mutex_t *mutex, long *value)
 	pthread_mutex_unlock(mutex);
 }
 
-bool all_thread_running(pthread_mutex_t *mutex, long *threads, long philo_nbr)
+void	wait_threads(t_table *table)
 {
-	bool retur;
-
-	retur = false;
-	pthread_mutex_lock(mutex);
-	if (philo_nbr == *threads)
-		retur = true;
-	pthread_mutex_unlock(mutex);
-	return (retur);
+	while (!get_bool(&table->table_mutex, &table->thread_ready))
+		;
 }
-

@@ -6,13 +6,13 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:49:37 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 18:09:51 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:52:00 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int		destroy_all(t_table *table)
+int	destroy_all(t_table *table)
 {
 	int	i;
 

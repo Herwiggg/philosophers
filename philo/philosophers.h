@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/06/26 04:19:30 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:55:54 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +15,13 @@
 
 # include <pthread.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <stdio.h>
 
-#define BLUE    "\033[1;34m"
-#define RST 	"\033[0m"
+# define BLUE "\033[1;34m"
+# define RST "\033[0m"
 
 typedef struct s_philo	t_philo;
 
@@ -71,7 +70,7 @@ typedef struct s_philo
 {
 	int					id;
 	long				meals_counter;
-	bool					full;
+	bool				full;
 	long				last_meal_time;
 	t_fork				*first_fork;
 	t_fork				*second_fork;
@@ -86,6 +85,7 @@ int						ft_check_arg_and_pars(char **str);
 int						ft_check_nbrs(char *str);
 int						ft_init_struct(t_table *table, char **argv,
 							t_philo *philo);
+int						ft_init_struct_2(t_table *table);
 void					assign_fork(t_philo *philo, t_fork *forks, int i);
 int						init_philo(t_philo *philo, t_table *table);
 
@@ -95,9 +95,9 @@ void					*dinner_simulation(void *data);
 void					wait_threads(t_table *table);
 void					write_status(t_status status, t_philo *philo);
 bool					simulation_finished(t_table *table);
-void 					eat(t_philo *philo);
+void					eat(t_philo *philo);
 void					sleeping(t_philo *philo);
-void 					think(t_philo *philo);
+void					think(t_philo *philo);
 
 /*---------Monitor----------*/
 void					*monitor_dinner(void *data);
@@ -116,11 +116,13 @@ long long				ft_atoi(const char *nptr);
 long					gettime(t_time_code time_code);
 void					precise_usleep(long usec, t_table *table);
 void					increase_long(pthread_mutex_t *mutex, long *value);
-bool 					all_thread_running(pthread_mutex_t *mutex, long *thread, long philo_nbr);
+bool					all_thread_running(pthread_mutex_t *mutex, long *thread,
+							long philo_nbr);
 
 /*---------Errors & free-----------*/
 int						destroy_all(t_table *table);
-int						destroy_error_mutex(t_table *table, int type, int type2, int type3);
+int						destroy_error_mutex(t_table *table, int type, int type2,
+							int type3);
 void					destroy_error_mutex_2(t_table *table, int type3);
 int						destroy_error_thread(t_table *table, int type, int nbr);
 
