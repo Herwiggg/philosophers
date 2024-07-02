@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:50:27 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 04:24:58 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:06:38 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int main(int ac, char **av)
 	if (ft_atoi(av[1]) == 0)
 		return (write(2, "wrong number of philo\n", 22));
 	if (ft_init_struct(&table, av, &philo) == -1)
-		return (write(2, "init error", 11));
-	dinner_start(&table);
+		return (write(2, "init error\n", 11));
+	if (dinner_start(&table) == 1)
+		return (write(2, "thread error\n", 14));
 	destroy_all(&table);
 }

@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 04:23:06 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:12:30 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,30 @@ void	sleeping(t_philo *philo)
 	precise_usleep(philo->table->time_to_sleep, philo->table);
 }
 
-void	dinner_start(t_table *table)
+int		dinner_start(t_table *table)
 {
 	int	i;
 	i = -1;
 	if (table->num_times_to_eat == 0)
-		return;
+		return (0);
 	if (table->num_of_philos == 1)
-		return;
+		return (0); //todo
 	else
 	{
 		table->start_time = gettime(MILLISECOND);
 		while (++i < table->num_of_philos)
-			pthread_create(&table->philos[i].thread_id, NULL, dinner_simulation, &table->philos[i]);
-		pthread_create(&table->monitor, NULL, monitor_dinner, table);
+			if (pthread_create(&table->philos[i].thread_id, NULL, dinner_simulation, &table->philos[i]) != 0)
+				return (destroy_error_thread(table, 0, i));
+		if (pthread_create(&table->monitor, NULL, monitor_dinner, table) != 0)
+			return (destroy_error_thread(table, 2, table->num_of_philos ));
 	}
 	set_bool(&table->table_mutex, &table->thread_ready, true);
 	i = -1;
 	while (++i < table->num_of_philos)
-		pthread_join(table->philos[i].thread_id, NULL);
+		if (pthread_join(table->philos[i].thread_id, NULL) != 0)
+			return (destroy_error_thread(table, 2, table->num_of_philos));
 	pthread_detach(table->monitor);
-
-	
+	return (0);
 }
 
 void	*dinner_simulation(void *data)

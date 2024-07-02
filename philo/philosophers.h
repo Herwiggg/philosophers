@@ -90,7 +90,7 @@ void					assign_fork(t_philo *philo, t_fork *forks, int i);
 int						init_philo(t_philo *philo, t_table *table);
 
 /*---------Dinner----------*/
-void					dinner_start(t_table *table);
+int						dinner_start(t_table *table);
 void					*dinner_simulation(void *data);
 void					wait_threads(t_table *table);
 void					write_status(t_status status, t_philo *philo);
@@ -119,8 +119,9 @@ void					increase_long(pthread_mutex_t *mutex, long *value);
 bool 					all_thread_running(pthread_mutex_t *mutex, long *thread, long philo_nbr);
 
 /*---------Errors & free-----------*/
-void					destroy_all(t_table *table);
+int						destroy_all(t_table *table);
 int						destroy_error_mutex(t_table *table, int type, int type2, int type3);
 void					destroy_error_mutex_2(t_table *table, int type3);
+int						destroy_error_thread(t_table *table, int type, int nbr);
 
 #endif
