@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:39:50 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 03:24:01 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 04:41:08 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	*monitor_dinner(void *data)
 				write_status(DIED, table->philos + i);
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 			}
+			usleep(100);
 		}
 	}
 	return (NULL);
