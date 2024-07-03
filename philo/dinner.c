@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 04:52:17 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:03:57 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	eat(t_philo *philo)
 	philo->meals_counter++;
 	write_status(EATING, philo);
 	precise_usleep(philo->table->time_to_eat, philo->table);
+	if (philo->meals_counter == philo->table->num_times_to_eat)
+		think(philo, 1);
 	if (philo->table->num_times_to_eat > 0
 		&& philo->meals_counter == philo->table->num_times_to_eat)
 		set_bool(&philo->philo_mutex, &philo->full, true);
