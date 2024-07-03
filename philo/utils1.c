@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 23:54:02 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 03:24:14 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,18 @@ void	wait_threads(t_table *table)
 {
 	while (!get_bool(&table->table_mutex, &table->thread_ready))
 		;
+}
+
+void	desync_philo(t_philo *philo)
+{
+	if (philo->table->num_of_philos % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			precise_usleep(3e4, philo->table);
+	}
+	else
+	{
+		if (philo->id % 2 == 0)
+			think(philo, true);
+	}
 }

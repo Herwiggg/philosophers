@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 23:55:54 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 03:20:59 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,17 @@ void					assign_fork(t_philo *philo, t_fork *forks, int i);
 int						init_philo(t_philo *philo, t_table *table);
 
 /*---------Dinner----------*/
-int						dinner_start(t_table *table);
+int						dinner_start(t_table *table, int i);
 void					*dinner_simulation(void *data);
 void					wait_threads(t_table *table);
 void					write_status(t_status status, t_philo *philo);
 bool					simulation_finished(t_table *table);
 void					eat(t_philo *philo);
 void					sleeping(t_philo *philo);
-void					think(t_philo *philo);
+void					think(t_philo *philo, bool pre_simulation);
+void					*one_philo(void *data);
+void					desync_philo(t_philo *philo);
+int						dinner_one_philo(t_table *table);
 
 /*---------Monitor----------*/
 void					*monitor_dinner(void *data);

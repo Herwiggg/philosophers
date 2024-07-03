@@ -11,6 +11,7 @@ MSRC = philosophers.c\
 		monitor.c\
 		free.c\
 		check_inputs.c\
+		one_philo.c\
 
 MOBJ = $(MSRC:.c=.o)
 

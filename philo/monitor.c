@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:39:50 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 23:54:32 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 03:24:01 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	*monitor_dinner(void *data)
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 			}
 		}
-		usleep(200);
 	}
 	return (NULL);
 }
