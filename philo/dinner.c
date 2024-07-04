@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 02:15:45 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/04 20:42:06 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->first_fork->fork);
-	pthread_mutex_lock(&philo->second_fork->fork);
 	write_status(TAKE_FIRST_FORK, philo);
+	pthread_mutex_lock(&philo->second_fork->fork);
 	write_status(TAKE_SECOND_FORK, philo);
+	write_status(EATING, philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	philo->meals_counter++;
-	write_status(EATING, philo);
 	precise_usleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->num_times_to_eat > 0
 		&& philo->meals_counter == philo->table->num_times_to_eat)
@@ -29,18 +29,12 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->second_fork->fork);
 }
 
-void	think(t_philo *philo, bool pre_simulation)
-{
 
-	pre_simulation = pre_simulation + 0;
-		write_status(THINKING, philo);
-
-}
-
-void	sleeping(t_philo *philo)
+void	sleeping_thinking(t_philo *philo)
 {
 	write_status(SLEEPING, philo);
 	precise_usleep(philo->table->time_to_sleep, philo->table);
+	write_status(THINKING, philo);
 }
 
 int	dinner_start(t_table *table, int i)
@@ -67,7 +61,6 @@ int	dinner_start(t_table *table, int i)
 	while (++i < table->num_of_philos)
 		if (pthread_join(table->philos[i].thread_id, NULL) != 0)
 			return (destroy_error_thread(table, 2, table->num_of_philos));
-//	set_bool(&table->table_mutex, &table->end_simulation, true);
 	return (0);
 }
 
@@ -78,13 +71,12 @@ void	*dinner_simulation(void *data)
 	philo = (t_philo *)data;
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	increase_long(&philo->table->table_mutex, &philo->table->thread_running);
-//	desync_philo(philo);
+	if (philo->id % 2 == 0)
+		precise_usleep(philo->table->time_to_eat, philo->table);
 	while (!simulation_finished(philo->table))
 	{
 		eat(philo);
-		sleeping(philo);
-		think(philo, false);
-	//	usleep(100);
+		sleeping_thinking(philo);
 	}
 	return (NULL);
 }

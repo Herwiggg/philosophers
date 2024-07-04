@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 21:08:01 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:55:10 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	init_philo(t_philo *philo, t_table *table)
 	while (++i < table->num_of_philos)
 	{
 		philo = table->philos + i;
-		philo->id = i + 1;
+		philo->id = i;
 		philo->meals_counter = 0;
 		philo->full = false;
 		philo->table = table;
@@ -79,14 +79,16 @@ int	init_philo(t_philo *philo, t_table *table)
 
 void	assign_fork(t_philo *philo, t_fork *forks, int i)
 {
-	if (philo->id % 2 == 0)
+
+	i = i + 0;
+	if (philo->id == 0)
 	{
-		philo->first_fork = &forks[i];
-		philo->second_fork = &forks[(i + 1) % philo->table->num_of_philos];
+		philo->first_fork = &forks[philo->table->num_of_philos - 1];
+		philo->second_fork = &forks[philo->id];
 	}
 	else
 	{
-		philo->second_fork = &forks[i];
-		philo->first_fork = &forks[(i + 1) % philo->table->num_of_philos];
+		philo->second_fork = &forks[philo->id - 1];
+		philo->first_fork = &forks[philo->id];
 	}
 }
