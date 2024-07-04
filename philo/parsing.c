@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/02 23:49:31 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:08:01 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	init_philo(t_philo *philo, t_table *table)
 	int	i;
 
 	i = -1;
+	pthread_mutex_init(&philo->check_eat_mutex, NULL);
 	while (++i < table->num_of_philos)
 	{
 		philo = table->philos + i;

@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 03:20:59 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/04 02:04:18 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_table
 	long				thread_running;
 	t_fork				*forks;
 	t_philo				*philos;
+	t_philo				*philo;
 	pthread_mutex_t		table_mutex;
 	pthread_mutex_t		write_mutex;
 	pthread_t			monitor;
@@ -76,6 +77,7 @@ typedef struct s_philo
 	t_fork				*second_fork;
 	pthread_t			thread_id;
 	pthread_mutex_t		philo_mutex;
+	pthread_mutex_t		check_eat_mutex;
 	t_table				*table;
 
 }						t_philo;
@@ -105,6 +107,7 @@ int						dinner_one_philo(t_table *table);
 /*---------Monitor----------*/
 void					*monitor_dinner(void *data);
 bool					philo_died(t_philo *philo);
+int						check_number_eat(t_table *philo);
 
 /*---------setters & getters-----------*/
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
@@ -121,6 +124,7 @@ void					precise_usleep(long usec, t_table *table);
 void					increase_long(pthread_mutex_t *mutex, long *value);
 bool					all_thread_running(pthread_mutex_t *mutex, long *thread,
 							long philo_nbr);
+int						is_full(t_philo *philo);
 
 /*---------Errors & free-----------*/
 int						destroy_all(t_table *table);

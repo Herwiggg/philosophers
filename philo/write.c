@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:39:23 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 04:50:05 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:16:44 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	write_status(t_status status, t_philo *philo)
 {
 	long	elapsed;
 
-	if (philo->full)
-		return ;
+	//if (philo->full)
+	//	return ;
 	pthread_mutex_lock(&philo->table->write_mutex);
 	elapsed = gettime(MILLISECOND) - philo->table->start_time;
 	if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK)

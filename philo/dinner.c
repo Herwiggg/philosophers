@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/03 17:03:57 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/04 02:15:45 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	eat(t_philo *philo)
 	philo->meals_counter++;
 	write_status(EATING, philo);
 	precise_usleep(philo->table->time_to_eat, philo->table);
-	if (philo->meals_counter == philo->table->num_times_to_eat)
-		think(philo, 1);
 	if (philo->table->num_times_to_eat > 0
 		&& philo->meals_counter == philo->table->num_times_to_eat)
 		set_bool(&philo->philo_mutex, &philo->full, true);
@@ -33,17 +31,10 @@ void	eat(t_philo *philo)
 
 void	think(t_philo *philo, bool pre_simulation)
 {
-//	long	t_eat;
-//	long	t_sleep;
-//	long	t_think;
+
 	pre_simulation = pre_simulation + 0;
 		write_status(THINKING, philo);
-//	t_eat = philo->table->time_to_eat;
-//	t_sleep = philo->table->time_to_sleep;
-//	t_think = t_eat * 2 - t_sleep;
-//	if (t_think < 0)
-//		t_think = 0;
-//	precise_usleep(t_think * 0.4, philo->table);
+
 }
 
 void	sleeping(t_philo *philo)
@@ -76,7 +67,7 @@ int	dinner_start(t_table *table, int i)
 	while (++i < table->num_of_philos)
 		if (pthread_join(table->philos[i].thread_id, NULL) != 0)
 			return (destroy_error_thread(table, 2, table->num_of_philos));
-	set_bool(&table->table_mutex, &table->end_simulation, true);
+//	set_bool(&table->table_mutex, &table->end_simulation, true);
 	return (0);
 }
 
@@ -90,14 +81,10 @@ void	*dinner_simulation(void *data)
 //	desync_philo(philo);
 	while (!simulation_finished(philo->table))
 	{
-		if (philo->full)
-		{
-				break ;
-		}
 		eat(philo);
 		sleeping(philo);
 		think(philo, false);
-		usleep(100);
+	//	usleep(100);
 	}
 	return (NULL);
 }
