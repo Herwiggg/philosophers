@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 20:42:22 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/05 03:54:04 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,23 @@ long	gettime(t_time_code time_code)
 	return (0);
 }
 
-void	precise_usleep(long usec, t_table *table)
+unsigned int	time_for_usleep(void)
 {
-	long	start;
-	long	elapsed;
-	long	remaining;
+	struct timeval	time;
+	unsigned int	time_return;
 
-	start = gettime(MILLISECOND);
-	while (gettime(MILLISECOND) - start < usec)
-	{
-		if (simulation_finished(table))
-			break ;
-		elapsed = gettime(MILLISECOND) - start;
-		remaining = usec - elapsed;
-		if (remaining > 1e3)
-			usleep(remaining / 2);
-		else
-		{
-			while (gettime(MILLISECOND) - start < usec)
-				;
-		}
-	}
+	gettimeofday(&time, NULL);
+	time_return = (time.tv_sec * 1000 + time.tv_usec / 1000);
+	return (time_return);
+}
+
+void	ft_usleep(int action_time)
+{
+	unsigned int	start_time;
+
+	start_time = time_for_usleep();
+	while (time_for_usleep() - start_time < (unsigned int)action_time)
+		usleep(200);
 }
 
 void	increase_long(pthread_mutex_t *mutex, long *value)
@@ -62,4 +58,3 @@ void	wait_threads(t_table *table)
 	while (!get_bool(&table->table_mutex, &table->thread_ready))
 		;
 }
-

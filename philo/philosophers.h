@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 02:04:18 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/05 03:48:27 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_table
 	bool				end_simulation;
 	bool				thread_ready;
 	long				thread_running;
+	long				flag_all_full;
 	t_fork				*forks;
 	t_philo				*philos;
 	t_philo				*philo;
@@ -88,7 +89,7 @@ int						ft_check_nbrs(char *str);
 int						ft_init_struct(t_table *table, char **argv,
 							t_philo *philo);
 int						ft_init_struct_2(t_table *table);
-void					assign_fork(t_philo *philo, t_fork *forks, int i);
+void					assign_fork(t_philo *philo, t_fork *forks);
 int						init_philo(t_philo *philo, t_table *table);
 
 /*---------Dinner----------*/
@@ -103,6 +104,8 @@ void					think(t_philo *philo, bool pre_simulation);
 void					*one_philo(void *data);
 void					desync_philo(t_philo *philo);
 int						dinner_one_philo(t_table *table);
+unsigned int			time_for_usleep(void);
+void					ft_usleep(int action_time);
 
 /*---------Monitor----------*/
 void					*monitor_dinner(void *data);

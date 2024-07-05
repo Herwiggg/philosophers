@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 19:55:10 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/05 03:53:48 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_init_struct_2(t_table *table)
 	table->end_simulation = false;
 	table->thread_ready = false;
 	table->thread_running = 0;
+	table->flag_all_full = 0;
 	if (pthread_mutex_init(&table->table_mutex, NULL) != 0)
 		return (destroy_error_mutex(table, 0, 0, 0));
 	if (pthread_mutex_init(&table->write_mutex, NULL) != 0)
@@ -66,21 +67,19 @@ int	init_philo(t_philo *philo, t_table *table)
 	while (++i < table->num_of_philos)
 	{
 		philo = table->philos + i;
-		philo->id = i;
+		philo->id = i + 1;
 		philo->meals_counter = 0;
 		philo->full = false;
 		philo->table = table;
 		if (pthread_mutex_init(&philo->philo_mutex, NULL) != 0)
 			return (destroy_error_mutex(table, 3, table->num_of_philos, i));
-		assign_fork(philo, table->forks, i);
+		assign_fork(philo, table->forks);
 	}
 	return (0);
 }
 
-void	assign_fork(t_philo *philo, t_fork *forks, int i)
+void	assign_fork(t_philo *philo, t_fork *forks)
 {
-
-	i = i + 0;
 	if (philo->id == 0)
 	{
 		philo->first_fork = &forks[philo->table->num_of_philos - 1];

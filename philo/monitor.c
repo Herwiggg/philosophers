@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 03:39:50 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 20:24:02 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/05 03:53:36 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	*monitor_dinner(void *data)
 {
 	t_table	*table;
 	int		i;
-	int		flag_all_full;
-	
+
 	table = (t_table *)data;
 	while (all_thread_running(&table->table_mutex, &table->thread_running,
 			table->num_of_philos) == false)
@@ -52,7 +51,7 @@ void	*monitor_dinner(void *data)
 	while (!simulation_finished(table))
 	{
 		i = -1;
-		flag_all_full = 0;
+		table->flag_all_full = 0;
 		while (++i < table->num_of_philos && !simulation_finished(table))
 		{
 			if (philo_died(table->philos + i))
@@ -60,16 +59,16 @@ void	*monitor_dinner(void *data)
 				write_status(DIED, table->philos + i);
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 			}
-			if  (is_full(table->philos + i) == 0)
-				flag_all_full++;
-			if (flag_all_full == table->num_of_philos)
+			if (is_full(table->philos + i) == 0)
+				table->flag_all_full++;
+			if (table->flag_all_full == table->num_of_philos)
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 		}
 	}
 	return (NULL);
 }
 
-int		is_full(t_philo *philo)
+int	is_full(t_philo *philo)
 {
 	if (philo->full == true)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/04 20:42:06 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/05 03:53:40 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	eat(t_philo *philo)
 	write_status(EATING, philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	philo->meals_counter++;
-	precise_usleep(philo->table->time_to_eat, philo->table);
+	ft_usleep(philo->table->time_to_eat);
 	if (philo->table->num_times_to_eat > 0
 		&& philo->meals_counter == philo->table->num_times_to_eat)
 		set_bool(&philo->philo_mutex, &philo->full, true);
@@ -29,11 +29,10 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->second_fork->fork);
 }
 
-
 void	sleeping_thinking(t_philo *philo)
 {
 	write_status(SLEEPING, philo);
-	precise_usleep(philo->table->time_to_sleep, philo->table);
+	ft_usleep(philo->table->time_to_sleep);
 	write_status(THINKING, philo);
 }
 
@@ -72,7 +71,7 @@ void	*dinner_simulation(void *data)
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	increase_long(&philo->table->table_mutex, &philo->table->thread_running);
 	if (philo->id % 2 == 0)
-		precise_usleep(philo->table->time_to_eat, philo->table);
+		ft_usleep(philo->table->time_to_eat);
 	while (!simulation_finished(philo->table))
 	{
 		eat(philo);
