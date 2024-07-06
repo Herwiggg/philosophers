@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:49:07 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/05 03:48:27 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/06 01:48:41 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define BLUE "\033[1;34m"
-# define RST "\033[0m"
 
 typedef struct s_philo	t_philo;
 
