@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/07 01:38:15 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/08 01:05:30 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	sleeping_thinking(t_philo *philo)
 	write_status(SLEEPING, philo);
 	ft_usleep(philo->table->time_to_sleep);
 	write_status(THINKING, philo);
+	ft_usleep((philo->table->time_to_die - (philo->table->time_to_eat + philo->table->time_to_sleep)) / 2);
 /*	t_eat = philo->table->time_to_eat;
 //	t_sleep = philo->table->time_to_sleep;
 	time_to_think = (philo->table->time_to_die - (time_for_usleep() - philo->last_meal_time) - t_eat) / 2;
