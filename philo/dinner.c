@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/08 01:05:30 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:54:05 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,9 @@ void	eat(t_philo *philo)
 
 void	sleeping_thinking(t_philo *philo)
 {
-//	long	t_eat;
-	//long	t_sleep;
-//	long	time_to_think;
-
 	write_status(SLEEPING, philo);
 	ft_usleep(philo->table->time_to_sleep);
 	write_status(THINKING, philo);
-	ft_usleep((philo->table->time_to_die - (philo->table->time_to_eat + philo->table->time_to_sleep)) / 2);
-/*	t_eat = philo->table->time_to_eat;
-//	t_sleep = philo->table->time_to_sleep;
-	time_to_think = (philo->table->time_to_die - (time_for_usleep() - philo->last_meal_time) - t_eat) / 2;
-	if (time_to_think < 0)
-		time_to_think = 0;
-	if (time_to_think == 0)
-		time_to_think = 1;
-	if (time_to_think > 200)
-		time_to_think = 2;
-	else
-		printf("TEDEDD\n");*/
-//	ft_usleep(philo->table->ti);
 }
 
 int	dinner_start(t_table *table, int i)

@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:08:52 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/07 01:19:41 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:41:37 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ void	assign_fork(t_philo *philo, t_fork *forks)
 {
 	if (philo->id % 2)
 	{
-		philo->first_fork = &forks[(philo->id + 1) % philo->table->num_of_philos];
+		philo->first_fork = &forks[(philo->id + 1)
+			% philo->table->num_of_philos];
 		philo->second_fork = &forks[philo->id];
 	}
 	else
 	{
-		philo->first_fork = &forks[(philo->id + 1) % philo->table->num_of_philos];
+		philo->first_fork = &forks[(philo->id + 1)
+			% philo->table->num_of_philos];
 		philo->second_fork = &forks[philo->id];
 	}
 }
