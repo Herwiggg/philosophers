@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:32:41 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/05 03:54:04 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:01:06 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_usleep(int action_time)
 
 	start_time = time_for_usleep();
 	while (time_for_usleep() - start_time < (unsigned int)action_time)
-		usleep(200);
+		usleep(500);
 }
 
 void	increase_long(pthread_mutex_t *mutex, long *value)

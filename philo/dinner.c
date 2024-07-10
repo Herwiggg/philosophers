@@ -6,7 +6,7 @@
 /*   By: almichel <almichel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:23:47 by almichel          #+#    #+#             */
-/*   Updated: 2024/07/09 16:54:05 by almichel         ###   ########.fr       */
+/*   Updated: 2024/07/11 01:27:11 by almichel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	eat(t_philo *philo)
 {
+	if (simulation_finished(philo->table))
+		return ;
 	pthread_mutex_lock(&philo->first_fork->fork);
 	write_status(TAKE_FIRST_FORK, philo);
 	pthread_mutex_lock(&philo->second_fork->fork);
@@ -31,9 +33,13 @@ void	eat(t_philo *philo)
 
 void	sleeping_thinking(t_philo *philo)
 {
+	if (simulation_finished(philo->table))
+		return ;
 	write_status(SLEEPING, philo);
 	ft_usleep(philo->table->time_to_sleep);
 	write_status(THINKING, philo);
+	ft_usleep((philo->table->time_to_die - (philo->table->time_to_eat
+				+ philo->table->time_to_sleep)) / 2);
 }
 
 int	dinner_start(t_table *table, int i)
